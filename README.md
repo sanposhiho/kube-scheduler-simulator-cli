@@ -1,6 +1,6 @@
-# mini-kube-scheduler: Scheduler for learning Kubernetes Scheduler
+# scheduler-playground: Scheduler for learning Kubernetes Scheduler
 
-Hello world. 
+Hello world.
 
 This repository is scenario system for kube-scheduler. You can write scenario like this and check the scheduler's behaviours.
 
@@ -52,7 +52,7 @@ func scenario(client clientset.Interface) error {
 	}
 
     klog.Info("scenario: pod1 is bound to " + pod1.Spec.NodeName)
-	
+
     return nil
 }
 ```
@@ -70,7 +70,6 @@ And, `make start` starts your scenario.
 
 ## Note
 
-This mini-kube-scheduler starts scheduler, etcd, api-server and pv-controller.
+This scheduler-playground starts scheduler, etcd, api-server and pv-controller.
 
 The whole mechanism is based on [kubernetes-sigs/kube-scheduler-simulator](https://github.com/kubernetes-sigs/kube-scheduler-simulator)
-

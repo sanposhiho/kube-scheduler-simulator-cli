@@ -36,7 +36,7 @@ import (
 	"k8s.io/kubernetes/pkg/kubeapiserver"
 	kubeletclient "k8s.io/kubernetes/pkg/kubelet/client"
 
-	generated "github.com/sanposhiho/mini-kube-scheduler/k8sapiserver/openapi"
+	generated "github.com/sanposhiho/scheduler-playground/k8sapiserver/openapi"
 )
 
 // StartAPIServer starts API server, and it make panic when a error happen.

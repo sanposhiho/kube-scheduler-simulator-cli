@@ -15,8 +15,8 @@ import (
 	"k8s.io/kubernetes/pkg/scheduler/framework/plugins"
 	schedulerRuntime "k8s.io/kubernetes/pkg/scheduler/framework/runtime"
 
-	"github.com/sanposhiho/mini-kube-scheduler/scheduler/defaultconfig"
-	schedulingresultstore "github.com/sanposhiho/mini-kube-scheduler/scheduler/plugin/resultstore"
+	"github.com/sanposhiho/scheduler-playground/scheduler/defaultconfig"
+	schedulingresultstore "github.com/sanposhiho/scheduler-playground/scheduler/plugin/resultstore"
 )
 
 //go:generate mockgen -destination=./mock/$GOFILE -source=$GOFILE

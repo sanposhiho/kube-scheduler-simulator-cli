@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"sync"
 
-	"github.com/sanposhiho/mini-kube-scheduler/util"
+	"github.com/sanposhiho/scheduler-playground/util"
 
 	"golang.org/x/xerrors"
 	v1 "k8s.io/api/core/v1"
@@ -16,7 +16,7 @@ import (
 	"k8s.io/client-go/tools/cache"
 	"k8s.io/klog/v2"
 
-	"github.com/sanposhiho/mini-kube-scheduler/scheduler/plugin/annotation"
+	"github.com/sanposhiho/scheduler-playground/scheduler/plugin/annotation"
 )
 
 // Store has results of scheduling.

@@ -1,4 +1,4 @@
-module github.com/sanposhiho/mini-kube-scheduler
+module github.com/sanposhiho/scheduler-playground
 
 go 1.16
 

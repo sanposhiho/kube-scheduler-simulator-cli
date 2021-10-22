@@ -16,8 +16,8 @@ import (
 	"k8s.io/kubernetes/pkg/scheduler/apis/config/v1beta2"
 	"k8s.io/kubernetes/pkg/scheduler/profile"
 
-	"github.com/sanposhiho/mini-kube-scheduler/scheduler/defaultconfig"
-	"github.com/sanposhiho/mini-kube-scheduler/scheduler/plugin"
+	"github.com/sanposhiho/scheduler-playground/scheduler/defaultconfig"
+	"github.com/sanposhiho/scheduler-playground/scheduler/plugin"
 )
 
 // Service manages scheduler.

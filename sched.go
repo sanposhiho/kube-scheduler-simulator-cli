@@ -6,17 +6,17 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/sanposhiho/mini-kube-scheduler/scheduler"
+	"github.com/sanposhiho/scheduler-playground/scheduler"
 	"golang.org/x/xerrors"
 	v1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	clientset "k8s.io/client-go/kubernetes"
 	"k8s.io/klog/v2"
 
-	"github.com/sanposhiho/mini-kube-scheduler/config"
-	"github.com/sanposhiho/mini-kube-scheduler/k8sapiserver"
-	"github.com/sanposhiho/mini-kube-scheduler/pvcontroller"
-	"github.com/sanposhiho/mini-kube-scheduler/scheduler/defaultconfig"
+	"github.com/sanposhiho/scheduler-playground/config"
+	"github.com/sanposhiho/scheduler-playground/k8sapiserver"
+	"github.com/sanposhiho/scheduler-playground/pvcontroller"
+	"github.com/sanposhiho/scheduler-playground/scheduler/defaultconfig"
 )
 
 // entry point.
