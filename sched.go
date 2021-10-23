@@ -6,6 +6,8 @@ import (
 	"strconv"
 	"time"
 
+	"k8s.io/apimachinery/pkg/api/resource"
+
 	"github.com/sanposhiho/scheduler-playground/scheduler"
 	"golang.org/x/xerrors"
 	v1 "k8s.io/api/core/v1"
@@ -86,9 +88,29 @@ func scenario(client clientset.Interface) error {
 		}
 	}
 
-	klog.Info("scenario: all nodes created")
+	cpu, err := resource.ParseQuantity("4")
+	mem, err := resource.ParseQuantity("32Gi")
+	podnum, err := resource.ParseQuantity("10")
 
-	_, err := client.CoreV1().Pods("default").Create(ctx, &v1.Pod{
+	// non unschedulable node
+	_, err = client.CoreV1().Nodes().Create(ctx, &v1.Node{
+		ObjectMeta: metav1.ObjectMeta{
+			Name: "node10",
+		},
+		Status: v1.NodeStatus{Capacity: v1.ResourceList{
+			v1.ResourceCPU:    cpu,
+			v1.ResourceMemory: mem,
+			v1.ResourcePods:   podnum,
+		}},
+	}, metav1.CreateOptions{})
+	if err != nil {
+		return fmt.Errorf("create node: %w", err)
+	}
+
+	klog.Info("scenario: all nodes created")
+	time.Sleep(5 * time.Second)
+
+	_, err = client.CoreV1().Pods("default").Create(ctx, &v1.Pod{
 		ObjectMeta: metav1.ObjectMeta{Name: "pod1"},
 		Spec: v1.PodSpec{
 			Containers: []v1.Container{
@@ -105,39 +127,13 @@ func scenario(client clientset.Interface) error {
 
 	klog.Info("scenario: pod1 created")
 
-	// wait to schedule
-	time.Sleep(3 * time.Second)
+	time.Sleep(5 * time.Second)
 
 	pod1, err := client.CoreV1().Pods("default").Get(ctx, "pod1", metav1.GetOptions{})
 	if err != nil {
 		return fmt.Errorf("get pod: %w", err)
 	}
-	if len(pod1.Spec.NodeName) != 0 {
-		return fmt.Errorf("pod1 should not be bound yet")
-	} else {
-		klog.Info("pod1 is have not been bound yet.")
-	}
-
-	_, err = client.CoreV1().Nodes().Create(ctx, &v1.Node{
-		ObjectMeta: metav1.ObjectMeta{
-			Name: "node10",
-		},
-		Spec: v1.NodeSpec{},
-	}, metav1.CreateOptions{})
-	if err != nil {
-		return fmt.Errorf("create node: %w", err)
-	}
-
-	klog.Info("node10 is created")
-
-	// wait to schedule
-	time.Sleep(5 * time.Second)
-
-	pod1, err = client.CoreV1().Pods("default").Get(ctx, "pod1", metav1.GetOptions{})
-	if err != nil {
-		return fmt.Errorf("get pod: %w", err)
-	}
-	klog.Info("pod1 is bound to" + pod1.Spec.NodeName)
+	klog.Info("pod1 is bound to " + pod1.Spec.NodeName)
 
 	return nil
 }

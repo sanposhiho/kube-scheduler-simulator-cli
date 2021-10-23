@@ -1,8 +1,14 @@
-# scheduler-playground: Scheduler for learning Kubernetes Scheduler
+# kube-scheduler-simulator-cli: Kubernetes Scheduler simulator on CLI and scenario system. 
 
 Hello world.
 
-This repository is scenario system for kube-scheduler. You can write scenario like this and check the scheduler's behaviours.
+This repository is scenario system for kube-scheduler. You can write scenario and check the scheduler's behaviours.
+
+And, also you can change the scheduler implementations on submodule/kubernetes. It helps changing implementations and debugging for scheeduler.
+
+## How to write the scenario
+
+see `scenario` function on [sched.go](/sched.go).
 
 ```go
 func scenario(client clientset.Interface) error {
@@ -57,16 +63,38 @@ func scenario(client clientset.Interface) error {
 }
 ```
 
-## custom scenario
+## How to change the scheduler implementations 
 
-You can write scenario [here](/sched.go#L70) and check this scheduler's behaviour.
+We have kubernetes/kubernetes repo as git submodule on [submodules/kubernetes](./submodules/kubernetes)
+
+On this simulator, we build the scheduler with the submodule.
+So you can change scheduler version or even you can change implementations by changing the scheduler implementations on submodule/kubernetes.
 
 ## How to start this scheduler and scenario
 
-To run this scheduler and start scenario, you have to install Go and etcd.
-You can install etcd with [kubernetes/kubernetes/hack/install-etcd.sh](https://github.com/kubernetes/kubernetes/blob/master/hack/install-etcd.sh).
+### 0. install etcd
 
-And, `make start` starts your scenario.
+To run this scheduler and start scenario, you have to install Go and etcd.
+You can install etcd with [submodules/kubernetes/kubernetes/kubernetes/hack/install-etcd.sh](https://github.com/kubernetes/kubernetes/blob/master/hack/install-etcd.sh).
+
+### 1. edit go.mod on submodule
+
+add `k8s.io/kubernetes => ./` on replace directive. like this:
+
+```
+replace (
+...
+...
+(the other replacements...)
+..
+.
+
+k8s.io/kubernetes => ./
+```
+
+### 2. let's start the scenario and scheduler.
+
+And, `make start` starts the scheduler and your scenario.
 
 ## Note
 

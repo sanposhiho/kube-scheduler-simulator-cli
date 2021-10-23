@@ -59,17 +59,17 @@ func (s *Service) StartScheduler(versionedcfg *v1beta2config.KubeSchedulerConfig
 
 	s.currentSchedulerCfg = versionedcfg.DeepCopy()
 
-	cfg, err := convertConfigurationForSimulator(versionedcfg)
-	if err != nil {
-		cancel()
-		return xerrors.Errorf("convert scheduler config to apply: %w", err)
-	}
+	//cfg, err := convertConfigurationForSimulator(versionedcfg)
+	//	if err != nil {
+	//		cancel()
+	//		return xerrors.Errorf("convert scheduler config to apply: %w", err)
+	//	}
 
-	registry, err := plugin.NewRegistry(informerFactory, clientSet)
-	if err != nil {
-		cancel()
-		return xerrors.Errorf("plugin registry: %w", err)
-	}
+	//	registry, err := plugin.NewRegistry(informerFactory, clientSet)
+	//	if err != nil {
+	//		cancel()
+	//		return xerrors.Errorf("plugin registry: %w", err)
+	//	}
 
 	sched, err := scheduler.New(
 		clientSet,
@@ -77,13 +77,13 @@ func (s *Service) StartScheduler(versionedcfg *v1beta2config.KubeSchedulerConfig
 		profile.NewRecorderFactory(evtBroadcaster),
 		ctx.Done(),
 		scheduler.WithKubeConfig(restConfig),
-		scheduler.WithProfiles(cfg.Profiles...),
-		scheduler.WithPercentageOfNodesToScore(cfg.PercentageOfNodesToScore),
-		scheduler.WithPodMaxBackoffSeconds(cfg.PodMaxBackoffSeconds),
-		scheduler.WithPodInitialBackoffSeconds(cfg.PodInitialBackoffSeconds),
-		scheduler.WithExtenders(cfg.Extenders...),
-		scheduler.WithParallelism(cfg.Parallelism),
-		scheduler.WithFrameworkOutOfTreeRegistry(registry),
+		//		scheduler.WithProfiles(cfg.Profiles...),
+		//		scheduler.WithPercentageOfNodesToScore(cfg.PercentageOfNodesToScore),
+		//		scheduler.WithPodMaxBackoffSeconds(cfg.PodMaxBackoffSeconds),
+		//		scheduler.WithPodInitialBackoffSeconds(cfg.PodInitialBackoffSeconds),
+		//		scheduler.WithExtenders(cfg.Extenders...),
+		//		scheduler.WithParallelism(cfg.Parallelism),
+		//		scheduler.WithFrameworkOutOfTreeRegistry(registry),
 	)
 	if err != nil {
 		cancel()
